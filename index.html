@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brandon Canniff — AI Product Leader</title>
+<meta name="description" content="Brandon Canniff is an AI Product Manager with experience shipping GenAI, govtech, and public health infrastructure products from 0→1 to scale.">
+<meta name="robots" content="index,follow">
+<meta property="og:title" content="Brandon Canniff — AI Product Leader">
+<meta property="og:description" content="AI PM portfolio with case studies across GenAI, govtech modernization, and public health data infrastructure.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gobrando.github.io/ai-product-portfolio/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Brandon Canniff — AI Product Leader">
+<meta name="twitter:description" content="AI PM portfolio with case studies across GenAI, govtech modernization, and public health data infrastructure.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -38,6 +47,25 @@ body {
 }
 
 ::selection { background: var(--accent); color: white; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 200;
+  background: var(--accent);
+  color: white;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+}
+.skip-link:focus { top: 0.8rem; }
 
 /* Navigation */
 nav {
@@ -56,12 +84,35 @@ nav .nav-inner {
 nav .logo { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; }
 nav .logo span { color: var(--accent-light); }
 nav .nav-links { display: flex; gap: 2rem; list-style: none; }
+nav .menu-toggle {
+  display: none;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+}
 nav .nav-links a {
   color: var(--text-secondary); text-decoration: none;
   font-size: 0.875rem; font-weight: 500;
   transition: color 0.2s;
 }
 nav .nav-links a:hover { color: var(--text); }
+.mobile-menu {
+  display: none;
+  border-top: 1px solid var(--border);
+  padding: 0.75rem 0 1rem;
+}
+.mobile-menu a {
+  display: block;
+  padding: 0.7rem 0;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+}
+.mobile-menu a:hover { color: var(--text); }
+nav[data-open="true"] .mobile-menu { display: block; }
 
 /* Hero */
 .hero {
@@ -86,14 +137,38 @@ nav .nav-links a:hover { color: var(--text); }
 .hero-content {
   position: relative; max-width: 900px; text-align: center;
 }
+.hero-photo-wrap {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 2rem;
+  position: relative;
+}
 .hero-photo {
   width: 140px; height: 140px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--surface-3);
-  margin-bottom: 2rem;
   box-shadow: 0 0 60px var(--accent-glow);
 }
+.hero-photo-fallback {
+  display: none;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px solid var(--surface-3);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(129,140,248,0.35), transparent 55%),
+    linear-gradient(135deg, var(--surface-2), var(--surface-3));
+  color: var(--text);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 0 60px var(--accent-glow);
+}
+.hero-photo-wrap.is-fallback .hero-photo { display: none; }
+.hero-photo-wrap.is-fallback .hero-photo-fallback { display: flex; }
 .hero-tag {
   display: inline-flex; align-items: center; gap: 0.5rem;
   background: var(--surface-2);
@@ -131,6 +206,26 @@ h1 .gradient {
 .hero-links {
   display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
 }
+.hero-meta {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 auto 1.25rem;
+}
+.hero-meta-chip {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+.hero-proof {
+  margin: 1.25rem auto 2rem;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}
 .btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 0.75rem 1.5rem;
@@ -153,6 +248,35 @@ h1 .gradient {
   border: 1px solid var(--border);
 }
 .btn-ghost:hover { border-color: var(--accent); background: var(--surface-3); }
+
+.btn-inline-note {
+  width: 100%;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.wins-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.win-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+}
+.win-card strong {
+  display: block;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+  font-size: 0.92rem;
+}
+.win-card span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
 
 /* Section layouts */
 section { padding: 6rem 2rem; }
@@ -218,6 +342,31 @@ section { padding: 6rem 2rem; }
 .cs-title { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.25rem; }
 .cs-org { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1rem; }
 .cs-body { color: var(--text-secondary); margin-bottom: 1.5rem; }
+.cs-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.cs-summary-item {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.75rem;
+}
+.cs-summary-label {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.2rem;
+}
+.cs-summary-value {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
 .cs-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
 .cs-metric {
   background: var(--surface-2);
@@ -271,6 +420,26 @@ section { padding: 6rem 2rem; }
 .venture-text h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
 .venture-text p { color: var(--text-secondary); font-size: 0.9rem; }
 
+.rubric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.rubric-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+.rubric-card h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+.rubric-card p {
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+}
+
 /* Contact / Footer */
 .contact {
   text-align: center;
@@ -288,18 +457,31 @@ section { padding: 6rem 2rem; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .cs-metrics { grid-template-columns: 1fr 1fr; }
   nav .nav-links { display: none; }
+  nav .menu-toggle { display: inline-flex; align-items: center; }
   .venture-card { flex-direction: column; text-align: center; }
 }
 @media (max-width: 480px) {
   section { padding: 4rem 1.25rem; }
   .case-study { padding: 1.5rem; }
+  .hero-meta { gap: 0.5rem; }
+  .hero-meta-chip { font-size: 0.72rem; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .cs-metrics { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 <!-- Navigation -->
-<nav>
+<nav id="site-nav" data-open="false">
   <div class="nav-inner">
     <div class="logo">brandon<span>.</span></div>
     <ul class="nav-links">
@@ -309,26 +491,51 @@ section { padding: 6rem 2rem; }
       <li><a href="#testimonials">Praise</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">Menu</button>
+  </div>
+  <div class="nav-inner mobile-menu" id="mobile-menu">
+    <div style="width:100%;">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#testimonials">Praise</a>
+      <a href="#contact">Contact</a>
+    </div>
   </div>
 </nav>
 
+<main id="main-content">
 <!-- Hero -->
 <section class="hero">
   <div class="hero-content">
-    <img class="hero-photo" alt="Brandon Canniff" src="HEADSHOT_PLACEHOLDER">
+    <div class="hero-photo-wrap" id="hero-photo-wrap">
+      <img class="hero-photo" id="hero-photo" alt="Brandon Canniff" src="HEADSHOT_PLACEHOLDER">
+      <div class="hero-photo-fallback" aria-hidden="true">BC</div>
+    </div>
     <div class="hero-tag"><span class="dot"></span> Open to AI PM roles</div>
+    <div class="hero-meta">
+      <div class="hero-meta-chip">Senior AI Product Manager</div>
+      <div class="hero-meta-chip">0→1 + Platform</div>
+      <div class="hero-meta-chip">Remote / Open to relocation</div>
+    </div>
     <h1>I build <span class="gradient">AI products</span> that<br>ship, scale, and matter.</h1>
-    <p class="hero-sub">Product leader with a track record of taking GenAI and govtech products from 0 → 1 and through pilot at scale. I combine deep technical fluency, cross-functional leadership, and a bias for ruthless execution.</p>
+    <p class="hero-sub">AI product leader with hands-on technical depth and a track record shipping GenAI, govtech modernization, and public health infrastructure. I lead from ambiguous problem framing through launch, adoption, and scale.</p>
+    <p class="hero-proof">Recent wins: launched a GenAI pilot to 50+ case workers in 4 months, improved LLM latency 9x, and led CDC infrastructure work routing millions of public health messages.</p>
     <div class="hero-links">
-      <a href="https://www.linkedin.com/in/brandoncanniff/" target="_blank" class="btn btn-primary">
+      <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm0 1.5L18.5 8H14zM8 13h8v1.5H8zm0 3h8v1.5H8zm0-6h4v1.5H8z"/></svg>
+        Download Resume
+      </a>
+      <a href="https://www.linkedin.com/in/brandoncanniff/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         LinkedIn
       </a>
-      <a href="https://github.com/gobrando" target="_blank" class="btn btn-ghost">
+      <a href="https://github.com/gobrando" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
         GitHub
       </a>
       <a href="#work" class="btn btn-ghost">View My Work &darr;</a>
+      <div class="btn-inline-note">Add your PDF resume as <code>resume.pdf</code> in this folder for the button above.</div>
     </div>
   </div>
 </section>
@@ -374,6 +581,22 @@ section { padding: 6rem 2rem; }
   </div>
 </section>
 
+<!-- Selected Wins -->
+<section id="wins" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-label">// selected wins</div>
+    <h2 class="section-title">Quick proof points for recruiters.</h2>
+    <p class="section-desc">A fast scan of outcomes and signals that map directly to top-company PM hiring rubrics: product judgment, execution, technical depth, and influence.</p>
+    <div class="wins-strip">
+      <div class="win-card"><strong>Shipped GenAI pilot in 4 months</strong><span>Discovery through live rollout and training for 50+ Goodwill case managers in Austin.</span></div>
+      <div class="win-card"><strong>Improved LLM latency 9x</strong><span>Ran hundreds of evals and model tests when engineering capacity was constrained.</span></div>
+      <div class="win-card"><strong>Led statewide platform modernization</strong><span>Defined strategy and requirements to replace three legacy childcare assistance systems.</span></div>
+      <div class="win-card"><strong>Scaled CDC infrastructure throughput 10x</strong><span>Managed roadmap and technical product direction for a national public health routing engine.</span></div>
+      <div class="win-card"><strong>Built trust across functions and clients</strong><span>Repeatedly cited by engineering, design, program, and leadership partners for communication and execution.</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- Work / Case Studies -->
 <section id="work" style="background: var(--surface);">
   <div class="container">
@@ -394,6 +617,12 @@ section { padding: 6rem 2rem; }
           <span class="cs-tag gov">Social Impact</span>
         </div>
       </div>
+      <div class="cs-summary">
+        <div class="cs-summary-item"><div class="cs-summary-label">Problem</div><div class="cs-summary-value">Case workers needed faster, more personalized local service referrals across complex needs.</div></div>
+        <div class="cs-summary-item"><div class="cs-summary-label">My Role</div><div class="cs-summary-value">End-to-end product lead from kickoff, discovery, PRD, roadmap, pilot launch, and onsite rollout.</div></div>
+        <div class="cs-summary-item"><div class="cs-summary-label">Key Decision</div><div class="cs-summary-value">Use RAG + eval-driven iteration to improve response quality and speed under tight capacity.</div></div>
+        <div class="cs-summary-item"><div class="cs-summary-label">Outcome</div><div class="cs-summary-value">Live pilot to 50+ case managers in 4 months with 9x latency improvement.</div></div>
+      </div>
       <div class="cs-body">
         <p>Led the full product lifecycle for a GenAI-powered decision support tool that helps Goodwill case workers deliver personalized, location-specific social service referrals to clients in need. The tool uses RAG architecture, LLM orchestration via Haystack, and vector databases to generate referrals across housing, food, childcare, transportation, and mental health — parsing intake assessments and conversational inputs.</p>
         <p style="margin-top:0.75rem;">I joined one week before kickoff, immediately presented to stakeholders, then drove discovery, authored the PRD defining 30+ functional requirements, built the roadmap, and launched a working pilot to 50+ case managers onsite in Austin, Texas in under 4 months. When engineering capacity was tight, I personally ran hundreds of AI evals across dozens of user scenarios using OpenAI Agents, tested LLM models to achieve 9x latency improvement, and built a usage tracking dashboard with cohort analysis using Claude Code.</p>
@@ -402,7 +631,7 @@ section { padding: 6rem 2rem; }
         <div class="cs-metric"><div class="cs-metric-val">4 months</div><div class="cs-metric-label">Discovery → pilot launch</div></div>
         <div class="cs-metric"><div class="cs-metric-val">9x faster</div><div class="cs-metric-label">LLM latency improvement</div></div>
         <div class="cs-metric"><div class="cs-metric-val">50+ users</div><div class="cs-metric-label">Onboarded live, onsite</div></div>
-        <div class="cs-metric"><div class="cs-metric-val">30+ reqs</div><div class="cs-metric-label">Functional requirements authored</div></div>
+        <div class="cs-metric"><div class="cs-metric-val">30+ reqs</div><div class="cs-metric-label">Pilot scope operationalized</div></div>
       </div>
       <div class="cs-quote">
         "He has shown a high degree of flexibility and partnership in getting the Goodwill Decision Support tool up and running... He played a critical role in launching and supporting the pilot, including running both in-person trainings in Texas."
@@ -427,12 +656,18 @@ section { padding: 6rem 2rem; }
           <span class="cs-tag health">Policy</span>
         </div>
       </div>
+      <div class="cs-summary">
+        <div class="cs-summary-item"><div class="cs-summary-label">Problem</div><div class="cs-summary-value">Families and administrators were blocked by fragmented legacy systems and policy misalignment.</div></div>
+        <div class="cs-summary-item"><div class="cs-summary-label">My Role</div><div class="cs-summary-value">Product strategy lead for modernization vision, scope, roadmap, requirements, and stakeholder management.</div></div>
+        <div class="cs-summary-item"><div class="cs-summary-label">Key Decision</div><div class="cs-summary-value">Create durable product brief and phased roadmap to align delivery with policy complexity.</div></div>
+        <div class="cs-summary-item"><div class="cs-summary-label">Outcome</div><div class="cs-summary-value">6-month contract delivered on time with a path to replace 3 systems statewide.</div></div>
+      </div>
       <div class="cs-body">
         <p>Led product strategy for a ground-up modernization of Massachusetts' childcare financial assistance (CCFA) program — replacing fragmented legacy systems (KinderWait, FACTS, CCFA-the-software) that required extensive manual data entry and didn't reflect current policy. The new platform unifies the application, waitlist, and eligibility process for families in need across the state.</p>
         <p style="margin-top:0.75rem;">Drove the entire product lifecycle: led a stakeholder visioning workshop to align competing perspectives, authored the product brief setting vision, strategy, and scope boundaries, then built a phased 6-month roadmap with 9-month contingency. Wrote 100+ product requirements and presented weekly to EEC leadership. When the work created design-engineering bottlenecks, I led difficult conversations to rework the delivery process and keep velocity up. Onboarded and trained a senior PdM to carry the work forward.</p>
       </div>
       <div class="cs-metrics">
-        <div class="cs-metric"><div class="cs-metric-val">100+</div><div class="cs-metric-label">Requirements authored</div></div>
+        <div class="cs-metric"><div class="cs-metric-val">100+</div><div class="cs-metric-label">Requirements translated into delivery scope</div></div>
         <div class="cs-metric"><div class="cs-metric-val">6-month</div><div class="cs-metric-label">Contract delivered on time</div></div>
         <div class="cs-metric"><div class="cs-metric-val">3 legacy</div><div class="cs-metric-label">Systems replaced</div></div>
         <div class="cs-metric"><div class="cs-metric-val">Statewide</div><div class="cs-metric-label">Family impact at scale</div></div>
@@ -459,6 +694,12 @@ section { padding: 6rem 2rem; }
           <span class="cs-tag scale">At Scale</span>
           <span class="cs-tag gov">Federal</span>
         </div>
+      </div>
+      <div class="cs-summary">
+        <div class="cs-summary-item"><div class="cs-summary-label">Problem</div><div class="cs-summary-value">Public health agencies needed reliable, scalable routing for critical lab and case-report data nationwide.</div></div>
+        <div class="cs-summary-item"><div class="cs-summary-label">My Role</div><div class="cs-summary-value">Sole technical PM for the Universal Pipeline team managing roadmap, priorities, and stakeholder alignment.</div></div>
+        <div class="cs-summary-item"><div class="cs-summary-label">Key Decision</div><div class="cs-summary-value">Drive platform scaling, standards translation, and new data ingestion capabilities in parallel.</div></div>
+        <div class="cs-summary-item"><div class="cs-summary-label">Outcome</div><div class="cs-summary-value">10x throughput scaling, new data markets, and a leadership-facing metrics dashboard.</div></div>
       </div>
       <div class="cs-body">
         <p>Served as the sole technical product manager for the Universal Pipeline team on ReportStream — the CDC's core data routing engine that delivers millions of public health messages (lab results, case reports, test orders) to state and local agencies nationwide. Managed the team's roadmap, sprint planning, stakeholder relationships, and technical vision for 2+ years.</p>
@@ -529,32 +770,32 @@ section { padding: 6rem 2rem; }
       <div class="testimonial">
         <p>"He thinks through our team's communication and collaboration needs to figure out new paths to mutual understanding. This is deep thinking work that does not go unnoticed."</p>
         <div class="author">Design Lead</div>
-        <div class="role">Nava PBC</div>
+        <div class="role">Nava PBC · Cross-functional partner</div>
       </div>
       <div class="testimonial">
         <p>"When I joined the project, he stepped up to become my unofficial onboarding buddy... I would have never gotten up to speed as fast as I did without his help. ReportStream would not have made the progress it has without him."</p>
         <div class="author">Senior Product Manager</div>
-        <div class="role">Nava PBC</div>
+        <div class="role">Nava PBC · ReportStream teammate</div>
       </div>
       <div class="testimonial">
         <p>"He stepped in to lead Product activities while we waited for our Lead to join... his impact has been huge. He jumped in without hesitation to onboard our Product CL, and since then, they've found such great ways to collaborate."</p>
         <div class="author">Delivery Manager</div>
-        <div class="role">Nava PBC</div>
+        <div class="role">Nava PBC · Delivery partner</div>
       </div>
       <div class="testimonial">
         <p>"It has been great to have him as a partner exploring new AI-assisted workflows, for example seeing him put together an analytic dashboard for our tool's usage using Claude Code."</p>
         <div class="author">Senior Design Researcher</div>
-        <div class="role">Nava PBC</div>
+        <div class="role">Nava PBC · Goodwill pilot</div>
       </div>
       <div class="testimonial">
         <p>"His calm demeanor and succinct communication skills make him highly approachable and a great team player!"</p>
         <div class="author">Program Manager</div>
-        <div class="role">Nava PBC</div>
+        <div class="role">Nava PBC · Client delivery partner</div>
       </div>
       <div class="testimonial">
         <p>"His CDC Huddle was incredibly [informative] and simplified complicated concepts in a way that was useful for all. Thank you for making it easy for everyone across the company to connect to this important work."</p>
         <div class="author">Executive</div>
-        <div class="role">Nava PBC</div>
+        <div class="role">Nava PBC · Internal leadership audience</div>
       </div>
     </div>
   </div>
@@ -575,17 +816,56 @@ section { padding: 6rem 2rem; }
   </div>
 </section>
 
+<!-- Recruiter Rubric -->
+<section id="why-me" style="background: var(--surface);">
+  <div class="container">
+    <div class="section-label">// why me for ai pm</div>
+    <h2 class="section-title">How I map to top AI PM hiring signals.</h2>
+    <p class="section-desc">This is the combination I bring: strong product judgment, technical fluency, execution under constraints, and the communication needed to move teams and stakeholders.</p>
+    <div class="rubric-grid">
+      <div class="rubric-card">
+        <h3>Product Judgment</h3>
+        <p>Turn ambiguous problem spaces into clear product strategy, scope boundaries, and sequencing plans that survive changing requirements.</p>
+      </div>
+      <div class="rubric-card">
+        <h3>Technical Depth</h3>
+        <p>Comfortable working across RAG systems, evals, model benchmarking, data standards, infra tradeoffs, and implementation details with engineering teams.</p>
+      </div>
+      <div class="rubric-card">
+        <h3>Execution Velocity</h3>
+        <p>Known for shipping under tight timelines and limited capacity while keeping quality and stakeholder confidence intact.</p>
+      </div>
+      <div class="rubric-card">
+        <h3>Cross-Functional Influence</h3>
+        <p>Trusted by design, engineering, research, program, and clients to facilitate alignment, handle tough conversations, and keep delivery moving.</p>
+      </div>
+      <div class="rubric-card">
+        <h3>Communication</h3>
+        <p>Writes durable briefs and requirements, presents clearly to executives and end users, and translates technical concepts for mixed audiences.</p>
+      </div>
+      <div class="rubric-card">
+        <h3>Mission + Scale Orientation</h3>
+        <p>Experience spans social impact, state systems, and national public health infrastructure with a builder mindset that transfers well to AI labs and growth-stage startups.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Contact -->
 <section class="contact" id="contact">
   <div class="section-label">// let's talk</div>
   <h2>Ready to build what's next.</h2>
   <p>I'm looking for my next opportunity leading AI product development at a top AI lab or high-growth startup.<br>Let's connect.</p>
   <div class="contact-links">
-    <a href="https://www.linkedin.com/in/brandoncanniff/" target="_blank" class="btn btn-primary">
+    <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm0 1.5L18.5 8H14zM8 13h8v1.5H8zm0 3h8v1.5H8zm0-6h4v1.5H8z"/></svg>
+      Download Resume
+    </a>
+    <a href="https://www.linkedin.com/in/brandoncanniff/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
       Connect on LinkedIn
     </a>
-    <a href="https://github.com/gobrando" target="_blank" class="btn btn-ghost">
+    <a href="https://github.com/gobrando" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
       GitHub
     </a>
@@ -595,6 +875,39 @@ section { padding: 6rem 2rem; }
   </div>
   <p style="margin-top: 3rem; color: var(--text-muted); font-size: 0.75rem;">&copy; 2026 Brandon Canniff. Built with purpose.</p>
 </section>
+</main>
+<script>
+  (function () {
+    var nav = document.getElementById('site-nav');
+    var toggle = nav ? nav.querySelector('.menu-toggle') : null;
+    if (nav && toggle) {
+      toggle.addEventListener('click', function () {
+        var open = nav.getAttribute('data-open') === 'true';
+        nav.setAttribute('data-open', String(!open));
+        toggle.setAttribute('aria-expanded', String(!open));
+      });
 
+      nav.querySelectorAll('.mobile-menu a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          nav.setAttribute('data-open', 'false');
+          toggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    var photo = document.getElementById('hero-photo');
+    var wrap = document.getElementById('hero-photo-wrap');
+    function showFallback() {
+      if (wrap) wrap.classList.add('is-fallback');
+    }
+    if (photo && wrap) {
+      if (!photo.getAttribute('src') || photo.getAttribute('src') === 'HEADSHOT_PLACEHOLDER') {
+        showFallback();
+      } else {
+        photo.addEventListener('error', showFallback);
+      }
+    }
+  })();
+</script>
 </body>
 </html>
