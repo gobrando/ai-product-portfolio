@@ -81,7 +81,7 @@ nav .nav-inner {
   display: flex; align-items: center; justify-content: space-between;
   height: 64px;
 }
-nav .logo { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; }
+nav .logo { font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; white-space: nowrap; }
 nav .logo span { color: var(--accent-light); }
 nav .nav-links { display: flex; gap: 2rem; list-style: none; }
 nav .menu-toggle {
@@ -99,10 +99,11 @@ nav .nav-links a {
   transition: color 0.2s;
 }
 nav .nav-links a:hover { color: var(--text); }
-.mobile-menu {
+nav .nav-inner.mobile-menu {
   display: none;
   border-top: 1px solid var(--border);
   padding: 0.75rem 0 1rem;
+  height: auto;
 }
 .mobile-menu a {
   display: block;
@@ -112,7 +113,7 @@ nav .nav-links a:hover { color: var(--text); }
   font-weight: 500;
 }
 .mobile-menu a:hover { color: var(--text); }
-nav[data-open="true"] .mobile-menu { display: block; }
+nav[data-open="true"] .nav-inner.mobile-menu { display: block; }
 
 /* Hero */
 .hero {
@@ -483,7 +484,7 @@ section { padding: 6rem 2rem; }
 <!-- Navigation -->
 <nav id="site-nav" data-open="false">
   <div class="nav-inner">
-    <div class="logo">brandon<span>.</span></div>
+    <div class="logo">brandon.canniff<span>.</span></div>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#work">Work</a></li>
@@ -535,7 +536,6 @@ section { padding: 6rem 2rem; }
         GitHub
       </a>
       <a href="#work" class="btn btn-ghost">View My Work &darr;</a>
-      <div class="btn-inline-note">Add your PDF resume as <code>resume.pdf</code> in this folder for the button above.</div>
     </div>
   </div>
 </section>
