@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study Evidence Index - Brandon Canniff</title>
+<meta name="description" content="Sanitized evidence index for Brandon Canniff's AI product case studies.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://gobrando.github.io/ai-product-portfolio/evidence.html">
+<style>
+:root {
+  --bg: #0a0a0b;
+  --surface: #111113;
+  --surface-2: #18181b;
+  --border: #27272a;
+  --text: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --accent: #6366f1;
+  --accent-light: #818cf8;
+  --ok: #22c55e;
+  --radius: 12px;
+  --radius-lg: 20px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: Inter, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  padding: 2.25rem 1.25rem 4rem;
+}
+.container { max-width: 980px; margin: 0 auto; }
+h1 {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+.subtitle { color: var(--text-secondary); margin-bottom: 1.5rem; max-width: 760px; }
+.top-links { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.95rem;
+  color: var(--text);
+  background: var(--surface-2);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.btn:hover { border-color: var(--accent); }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.8rem 0.95rem;
+}
+.stat-label { color: var(--text-muted); font-size: 0.78rem; margin-bottom: 0.2rem; }
+.stat-value { font-size: 1.1rem; font-weight: 700; }
+.controls {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.95rem;
+  margin-bottom: 1.2rem;
+}
+.control-label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-bottom: 0.45rem;
+}
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+.filter-chip {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  border-radius: 999px;
+  padding: 0.36rem 0.7rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.filter-chip.active {
+  border-color: rgba(99, 102, 241, 0.7);
+  background: rgba(99, 102, 241, 0.17);
+  color: var(--text);
+}
+.search-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--text);
+  padding: 0.6rem 0.7rem;
+  font-size: 0.9rem;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.3rem;
+  margin-bottom: 1rem;
+}
+.card h2 { font-size: 1.2rem; margin-bottom: 0.3rem; }
+.org { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 0.9rem; }
+h3 { font-size: 0.94rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin: 0.85rem 0 0.35rem; }
+ul { margin-left: 1.1rem; color: var(--text-secondary); }
+li { margin-bottom: 0.25rem; }
+.artifact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+.artifact-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+}
+.artifact-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+.artifact-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.artifact-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  margin-top: 0.15rem;
+}
+.pill {
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 0.16rem 0.46rem;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.proof-score {
+  color: var(--ok);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  background: rgba(34, 197, 94, 0.12);
+  border-radius: 999px;
+  padding: 0.16rem 0.46rem;
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+.artifact-summary {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  margin-top: 0.5rem;
+}
+.artifact-media {
+  margin-top: 0.65rem;
+}
+.artifact-thumb {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  height: 110px;
+  padding: 0.75rem;
+  background:
+    radial-gradient(circle at 22% 24%, rgba(99, 102, 241, 0.35), transparent 55%),
+    linear-gradient(140deg, rgba(24, 24, 27, 1), rgba(35, 35, 38, 1));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.artifact-thumb-badge {
+  display: inline-block;
+  border: 1px solid rgba(129, 140, 248, 0.45);
+  color: var(--accent-light);
+  border-radius: 999px;
+  font-size: 0.67rem;
+  padding: 0.14rem 0.45rem;
+  margin-bottom: 0.42rem;
+  width: fit-content;
+}
+.artifact-thumb-label {
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.artifact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.6rem;
+}
+.artifact-action {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  border-radius: 999px;
+  padding: 0.3rem 0.62rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.artifact-action:hover {
+  border-color: rgba(129, 140, 248, 0.6);
+  color: var(--text);
+}
+.artifact-action-link {
+  text-decoration: none;
+}
+.preview-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 60;
+}
+.preview-modal[hidden] { display: none; }
+.preview-modal-card {
+  width: min(780px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem;
+}
+.preview-modal-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin-bottom: 0.7rem;
+}
+.preview-modal-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.preview-modal-close {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-secondary);
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.preview-modal-close:hover {
+  color: var(--text);
+  border-color: rgba(129, 140, 248, 0.6);
+}
+.preview-canvas {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-height: 250px;
+  padding: 1.1rem;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(99, 102, 241, 0.3), transparent 42%),
+    linear-gradient(130deg, rgba(17, 17, 19, 1), rgba(35, 35, 38, 1));
+}
+.preview-canvas-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.45rem;
+}
+.preview-canvas-title {
+  font-size: 1.06rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.preview-canvas-copy {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+.hidden { display: none !important; }
+.note {
+  margin-top: 1.3rem;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-radius: var(--radius);
+  padding: 0.9rem;
+  color: var(--text-secondary);
+}
+@media (max-width: 700px) {
+  .card { padding: 1rem; }
+}
+</style>
+</head>
+<body>
+  <main class="container">
+    <h1>Case Study Evidence Index</h1>
+    <p class="subtitle">This page provides a sanitized artifact catalog and proof metadata for hiring teams. Full materials are shared in private walkthroughs due to confidentiality commitments.</p>
+    <div class="top-links">
+      <a class="btn" data-track="evidence_back_to_portfolio_click" href="index.html#work">Back to Portfolio</a>
+      <a class="btn" data-track="evidence_request_walkthrough_click" href="mailto:iambrandomoon@gmail.com?subject=Request%20Private%20Evidence%20Walkthrough">Request Private Walkthrough</a>
+    </div>
+
+    <section class="stats-grid" aria-label="Evidence summary">
+      <article class="stat-card">
+        <div class="stat-label">Case Studies</div>
+        <div class="stat-value">3</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-label">Sanitized Artifacts</div>
+        <div class="stat-value">14</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-label">Domains</div>
+        <div class="stat-value">GenAI • GovTech • Health</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-label">Review Path</div>
+        <div class="stat-value">Index → Walkthrough → Q&A</div>
+      </article>
+    </section>
+
+    <section class="controls" aria-label="Evidence filters">
+      <div class="control-label">Filter by case study</div>
+      <div class="filter-row" role="group" aria-label="Case study filters">
+        <button class="filter-chip active" data-filter="all" data-track="evidence_filter_all_click" type="button">All</button>
+        <button class="filter-chip" data-filter="goodwill" data-track="evidence_filter_goodwill_click" type="button">Goodwill GenAI</button>
+        <button class="filter-chip" data-filter="ma-eec" data-track="evidence_filter_maeec_click" type="button">MA Childcare</button>
+        <button class="filter-chip" data-filter="cdc-reportstream" data-track="evidence_filter_cdc_click" type="button">CDC ReportStream</button>
+      </div>
+      <div class="control-label">Search artifact titles/descriptions</div>
+      <input id="artifact-search" class="search-input" type="search" placeholder="Search artifacts..." aria-label="Search artifacts" data-track="evidence_artifact_search_input">
+    </section>
+
+    <section id="goodwill" class="card">
+      <h2>Goodwill GenAI Referral Assistant</h2>
+      <div class="org">Nava PBC x Nava Labs x Gates Foundation</div>
+      <h3>Sanitized Evidence Available</h3>
+      <ul>
+        <li>Product scope map (problem framing, user jobs, success metrics)</li>
+        <li>Example requirement slices for pilot scope</li>
+        <li>Eval methodology summary for quality and latency testing</li>
+        <li>Pilot rollout plan and training structure overview</li>
+      </ul>
+      <h3>How To Review</h3>
+      <ul>
+        <li>30-minute walkthrough with context and decision rationale</li>
+        <li>Q&amp;A on product tradeoffs, adoption strategy, and launch execution</li>
+      </ul>
+      <h3>Artifact Snapshot</h3>
+      <div class="artifact-grid">
+        <article class="artifact-card" data-artifact data-case="goodwill" data-search="product scope map pilot goal framing user jobs">
+          <div class="artifact-header">
+            <div>
+              <div class="artifact-title">Product Scope Map (Redacted)</div>
+              <div class="artifact-meta"><span class="pill">Strategy</span><span>Q1 2025</span></div>
+            </div>
+            <span class="proof-score">Confidence 0.92</span>
+          </div>
+          <p class="artifact-summary">Problem framing, user job slices, and pilot success metrics used for go/no-go decisioning.</p>
+        </article>
+        <article class="artifact-card" data-artifact data-case="goodwill" data-search="eval quality latency rubric hallucination safety response time">
+          <div class="artifact-header">
+            <div>
+              <div class="artifact-title">Quality + Latency Eval Rubric</div>
+              <div class="artifact-meta"><span class="pill">Measurement</span><span>Q2 2025</span></div>
+            </div>
+            <span class="proof-score">Confidence 0.89</span>
+          </div>
+          <p class="artifact-summary">Eval dimensions, scoring thresholds, and remediation loop used during pilot hardening.</p>
+        </article>
+        <article class="artifact-card" data-artifact data-case="goodwill" data-search="rollout enablement operations training support plan">
+          <div class="artifact-header">
+            <div>
+              <div class="artifact-title">Pilot Enablement Plan</div>
+              <div class="artifact-meta"><span class="pill">Operations</span><span>Q2 2025</span></div>
+            </div>
+            <span class="proof-score">Confidence 0.87</span>
+          </div>
+          <p class="artifact-summary">Training structure, support model, and escalation pathways for launch readiness.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="ma-eec" class="card">
+      <h2>Massachusetts Childcare Financial Assistance Platform</h2>
+      <div class="org">Nava PBC x MA Executive Office of Education</div>
+      <h3>Sanitized Evidence Available</h3>
+      <ul>
+        <li>Product brief outline with strategy and scope boundaries</li>
+        <li>Roadmap phasing model used for policy-heavy delivery</li>
+        <li>Requirement decomposition examples from legacy modernization work</li>
+        <li>Stakeholder alignment cadence and decision artifacts</li>
+      </ul>
+      <h3>How To Review</h3>
+      <ul>
+        <li>Private walkthrough focused on systems replacement strategy</li>
+        <li>Discussion of how cross-functional bottlenecks were resolved</li>
+      </ul>
+      <h3>Artifact Snapshot</h3>
+      <div class="artifact-grid">
+        <article class="artifact-card" data-artifact data-case="ma-eec" data-search="brief scope policy constraints modernization success metrics">
+          <div class="artifact-header">
+            <div>
+              <div class="artifact-title">Product Brief Outline (Sanitized)</div>
+              <div class="artifact-meta"><span class="pill">Strategy</span><span>2024</span></div>
+            </div>
+            <span class="proof-score">Confidence 0.90</span>
+          </div>
+          <p class="artifact-summary">Scope boundaries, policy constraints, and measurable outcomes for phased modernization.</p>
+        </article>
+        <article class="artifact-card" data-artifact data-case="ma-eec" data-search="roadmap sequencing policy heavy delivery dependencies cross agency">
+          <div class="artifact-header">
+            <div>
+              <div class="artifact-title">Roadmap Sequencing Model</div>
+              <div class="artifact-meta"><span class="pill">Execution</span><span>2024</span></div>
+            </div>
+            <span class="proof-score">Confidence 0.86</span>
+          </div>
+          <p class="artifact-summary">Dependency mapping approach used to coordinate policy, engineering, and operations milestones.</p>
+        </article>
+        <article class="artifact-card" data-artifact data-case="ma-eec" data-search="legacy decomposition requirement slices decision log adoption">
+          <div class="artifact-header">
+            <div>
+              <div class="artifact-title">Requirement Decomposition Sample</div>
+              <div class="artifact-meta"><span class="pill">Delivery</span><span>2024</span></div>
+            </div>
+            <span class="proof-score">Confidence 0.88</span>
+          </div>
+          <p class="artifact-summary">Examples of breaking policy-heavy epics into implementation-ready slices for cross-team execution.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="cdc-reportstream" class="card">
+      <h2>CDC ReportStream Public Health Infrastructure</h2>
+      <div class="org">Nava PBC x Centers for Disease Control and Prevention</div>
+      <h3>Sanitized Evidence Available</h3>
+      <ul>
+        <li>Roadmap themes across throughput, data standards, and onboarding</li>
+        <li>Metrics framework used for leadership visibility</li>
+        <li>Examples of cross-org stakeholder communication artifacts</li>
+        <li>Scale-up decision log patterns used over multi-year delivery</li>
+      </ul>
+      <h3>How To Review</h3>
+      <ul>
+        <li>Private evidence review with product and technical depth</li>
+        <li>Discussion of 10x scaling approach and operational constraints</li>
+      </ul>
+      <h3>Artifact Snapshot</h3>
+      <div class="artifact-grid">
+        <article class="artifact-card" data-artifact data-case="cdc-reportstream" data-search="throughput metrics data standards roadmap themes onboarding">
+          <div class="artifact-header">
+            <div>
+              <div class="artifact-title">Scale Theme Roadmap</div>
+              <div class="artifact-meta"><span class="pill">Roadmap</span><span>Multi-year</span></div>
+            </div>
+            <span class="proof-score">Confidence 0.91</span>
+          </div>
+          <p class="artifact-summary">Theme-level roadmap showing how throughput and standards workstreams were balanced over time.</p>
+        </article>
+        <article class="artifact-card" data-artifact data-case="cdc-reportstream" data-search="leadership reporting KPI dashboard delivery health">
+          <div class="artifact-header">
+            <div>
+              <div class="artifact-title">Leadership KPI Framework</div>
+              <div class="artifact-meta"><span class="pill">Measurement</span><span>Multi-year</span></div>
+            </div>
+            <span class="proof-score">Confidence 0.90</span>
+          </div>
+          <p class="artifact-summary">Metrics framework used for leadership visibility into delivery health, risk, and impact.</p>
+        </article>
+        <article class="artifact-card" data-artifact data-case="cdc-reportstream" data-search="stakeholder communication operations decision logs">
+          <div class="artifact-header">
+            <div>
+              <div class="artifact-title">Cross-Org Communication Artifacts</div>
+              <div class="artifact-meta"><span class="pill">Operations</span><span>Multi-year</span></div>
+            </div>
+            <span class="proof-score">Confidence 0.85</span>
+          </div>
+          <p class="artifact-summary">Cadence and artifact patterns used to align technical and policy stakeholders at scale.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="note">
+      Need deeper proof for final-stage interviews? Email and request the "private evidence walkthrough" package.
+    </div>
+  </main>
+  <div id="preview-modal" class="preview-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="preview-modal-title">
+    <div class="preview-modal-card">
+      <div class="preview-modal-head">
+        <div>
+          <div id="preview-modal-title" class="preview-modal-title">Artifact Preview</div>
+        </div>
+        <button id="preview-modal-close" class="preview-modal-close" type="button" aria-label="Close preview">&times;</button>
+      </div>
+      <div class="preview-canvas">
+        <div class="preview-canvas-label">Sanitized Artifact Snapshot</div>
+        <div id="preview-canvas-title" class="preview-canvas-title"></div>
+        <div id="preview-canvas-copy" class="preview-canvas-copy"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const chips = Array.from(document.querySelectorAll('.filter-chip'));
+      const searchInput = document.getElementById('artifact-search');
+      const cards = Array.from(document.querySelectorAll('[data-artifact]'));
+      const sections = Array.from(document.querySelectorAll('.card'));
+      const previewModal = document.getElementById('preview-modal');
+      const previewModalClose = document.getElementById('preview-modal-close');
+      const previewCanvasTitle = document.getElementById('preview-canvas-title');
+      const previewCanvasCopy = document.getElementById('preview-canvas-copy');
+      let activeFilter = 'all';
+      let query = '';
+      let searchTrackedForQuery = false;
+      let lastFocused = null;
+
+      function initAnalytics() {
+        const cfg = window.PORTFOLIO_ANALYTICS;
+        if (!cfg || !cfg.provider) return;
+
+        if (cfg.provider === 'plausible' && cfg.domain) {
+          const p = document.createElement('script');
+          p.defer = true;
+          p.setAttribute('data-domain', cfg.domain);
+          p.src = 'https://plausible.io/js/script.js';
+          document.head.appendChild(p);
+        }
+
+        if (cfg.provider === 'ga4' && cfg.measurementId) {
+          const g = document.createElement('script');
+          g.async = true;
+          g.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(cfg.measurementId);
+          document.head.appendChild(g);
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+          window.gtag('js', new Date());
+          window.gtag('config', cfg.measurementId);
+        }
+      }
+
+      function loadOptionalAnalyticsConfig() {
+        return new Promise((resolve) => {
+          const cfgScript = document.createElement('script');
+          cfgScript.src = 'analytics.config.js';
+          cfgScript.async = true;
+          cfgScript.onload = function () { resolve(); };
+          cfgScript.onerror = function () { resolve(); };
+          document.head.appendChild(cfgScript);
+        });
+      }
+
+      function track(eventName) {
+        if (!eventName) return;
+        if (typeof window.plausible === 'function') {
+          window.plausible(eventName);
+        }
+        if (Array.isArray(window.dataLayer)) {
+          window.dataLayer.push({ event: eventName });
+        }
+        if (window.console && typeof window.console.info === 'function') {
+          window.console.info('[analytics]', eventName);
+        }
+      }
+
+      function bindTracking() {
+        document.querySelectorAll('[data-track]').forEach((element) => {
+          element.addEventListener('click', () => {
+            track(element.getAttribute('data-track'));
+          });
+        });
+      }
+
+      function openPreview(card) {
+        const titleEl = card.querySelector('.artifact-title');
+        const summaryEl = card.querySelector('.artifact-summary');
+        previewCanvasTitle.textContent = titleEl ? titleEl.textContent.trim() : 'Artifact Preview';
+        previewCanvasCopy.textContent = summaryEl ? summaryEl.textContent.trim() : 'Request the private walkthrough for full detail.';
+        lastFocused = document.activeElement;
+        previewModal.hidden = false;
+        previewModal.setAttribute('aria-hidden', 'false');
+        previewModalClose.focus();
+        track('evidence_artifact_preview_opened');
+      }
+
+      function closePreview() {
+        previewModal.hidden = true;
+        previewModal.setAttribute('aria-hidden', 'true');
+        if (lastFocused && typeof lastFocused.focus === 'function') {
+          lastFocused.focus();
+        }
+      }
+
+      function enhanceArtifactCards() {
+        cards.forEach((card) => {
+          const titleEl = card.querySelector('.artifact-title');
+          const title = titleEl ? titleEl.textContent.trim() : 'Artifact';
+
+          const mediaWrap = document.createElement('div');
+          mediaWrap.className = 'artifact-media';
+
+          const thumb = document.createElement('div');
+          thumb.className = 'artifact-thumb';
+          thumb.innerHTML = '<span class="artifact-thumb-badge">Sanitized</span><div class="artifact-thumb-label"></div>';
+          const thumbLabel = thumb.querySelector('.artifact-thumb-label');
+          thumbLabel.textContent = title;
+
+          const actions = document.createElement('div');
+          actions.className = 'artifact-actions';
+
+          const previewButton = document.createElement('button');
+          previewButton.type = 'button';
+          previewButton.className = 'artifact-action';
+          previewButton.textContent = 'Preview';
+          previewButton.setAttribute('data-track', 'evidence_artifact_preview_click');
+          previewButton.addEventListener('click', () => openPreview(card));
+
+          const requestLink = document.createElement('a');
+          requestLink.className = 'artifact-action artifact-action-link';
+          requestLink.href = 'mailto:iambrandomoon@gmail.com?subject=Request%20Artifact%20Detail%20-%20' + encodeURIComponent(title);
+          requestLink.textContent = 'Request Full Artifact';
+          requestLink.setAttribute('data-track', 'evidence_artifact_request_click');
+
+          actions.appendChild(previewButton);
+          actions.appendChild(requestLink);
+          mediaWrap.appendChild(thumb);
+          mediaWrap.appendChild(actions);
+          card.appendChild(mediaWrap);
+        });
+      }
+
+      function applyFilters() {
+        cards.forEach((card) => {
+          const caseId = card.getAttribute('data-case');
+          const text = (card.getAttribute('data-search') || '').toLowerCase();
+          const filterMatch = activeFilter === 'all' || caseId === activeFilter;
+          const searchMatch = !query || text.includes(query);
+          card.classList.toggle('hidden', !(filterMatch && searchMatch));
+        });
+
+        sections.forEach((section) => {
+          const visibleArtifacts = section.querySelectorAll('[data-artifact]:not(.hidden)');
+          section.classList.toggle('hidden', visibleArtifacts.length === 0);
+        });
+      }
+
+      chips.forEach((chip) => {
+        chip.addEventListener('click', () => {
+          activeFilter = chip.getAttribute('data-filter') || 'all';
+          chips.forEach((it) => it.classList.toggle('active', it === chip));
+          applyFilters();
+        });
+      });
+
+      searchInput.addEventListener('input', (event) => {
+        query = event.target.value.trim().toLowerCase();
+        if (query && !searchTrackedForQuery) {
+          track('evidence_artifact_search_used');
+          searchTrackedForQuery = true;
+        } else if (!query) {
+          searchTrackedForQuery = false;
+        }
+        applyFilters();
+      });
+
+      previewModalClose.addEventListener('click', closePreview);
+      previewModal.addEventListener('click', (event) => {
+        if (event.target === previewModal) {
+          closePreview();
+        }
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !previewModal.hidden) {
+          closePreview();
+        }
+      });
+
+      loadOptionalAnalyticsConfig().then(() => {
+        enhanceArtifactCards();
+        initAnalytics();
+        bindTracking();
+      });
+    })();
+  </script>
+</body>
+</html>
