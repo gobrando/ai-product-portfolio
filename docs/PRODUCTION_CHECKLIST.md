@@ -19,6 +19,7 @@ Last updated: 2026-03-16
 - Evidence page funnel instrumentation (filter/search/request/back-path events)
 - Evidence artifact preview UX (sanitized thumbnail cards + modal preview + keyboard close)
 - Smoke test coverage for artifact preview modal flow
+- Analytics config validation script (`npm run check:analytics`, strict mode available)
 
 ## Remaining
 - Configure production analytics account details:

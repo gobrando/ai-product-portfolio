@@ -1,0 +1,16 @@
+{
+  "name": "brandon-canniff-ai-pm-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static portfolio with lightweight Playwright smoke coverage.",
+  "scripts": {
+    "check:analytics": "node scripts/check-analytics-config.mjs",
+    "check:analytics:strict": "STRICT_ANALYTICS=1 node scripts/check-analytics-config.mjs",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0"
+  }
+}

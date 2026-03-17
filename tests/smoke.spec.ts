@@ -82,6 +82,12 @@ test('analytics bootstrap injects plausible script when configured', async ({ pa
   await expect(page.locator('script[data-domain="example.com"]')).toHaveAttribute('src', 'https://plausible.io/js/script.js');
 });
 
+test('analytics status reports unconfigured by default config', async ({ page }) => {
+  await page.goto('/');
+  const status = await page.evaluate(() => (window as unknown as { __portfolioAnalyticsStatus?: string }).__portfolioAnalyticsStatus);
+  expect(status?.startsWith('unconfigured:')).toBeTruthy();
+});
+
 test('evidence index page and anchors are reachable', async ({ page }) => {
   await page.goto('/evidence.html');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Case Study Evidence Index');

@@ -22,11 +22,60 @@ python3 -m http.server 8000
 # Visit http://localhost:8000
 ```
 
+### Analytics Setup (Optional)
+CTA click events are already instrumented in `index.html` via `data-track` attributes.
+
+Recommended setup:
+
+```bash
+# edit analytics.config.js with real provider values
+npm run check:analytics
+```
+
+The page auto-loads `analytics.config.js` at runtime if present.
+Use strict mode in CI once production analytics values are expected:
+
+```bash
+npm run check:analytics:strict
+```
+
+### E2E Smoke Tests
+```bash
+npm install
+npx playwright install chromium
+npm run test:e2e
+```
+
+Smoke tests cover:
+- core hero/contact CTA visibility
+- navigation anchor flow (`#work`, `#contact`)
+- hero image fallback behavior on image load error
+- responsive hero image delivery path
+- mobile menu toggle + Escape-close behavior
+- case-study evidence CTA presence
+- analytics bootstrap injection path
+- evidence index routing
+
 ### Add Your Headshot
-Replace the placeholder headshot by:
-1. Converting your image to base64
-2. Finding the line: `src="data:image/svg+xml,..."`
-3. Replace with: `src="data:image/jpeg;base64,[YOUR_BASE64_HERE]"`
+Replace source image and regenerate responsive variants:
+```bash
+# 1) Replace headshot.jpg
+# 2) Regenerate responsive assets
+python3 - <<'PY'
+from PIL import Image
+src = Image.open('headshot.jpg').convert('RGB')
+w, h = src.size
+side = min(w, h)
+left = (w - side) // 2
+top = (h - side) // 2
+crop = src.crop((left, top, left + side, top + side))
+for size in (140, 280, 560):
+    out = crop.resize((size, size), Image.Resampling.LANCZOS)
+    out.save(f'assets/images/headshot-{size}.webp', format='WEBP', quality=84, method=6)
+    out.save(f'assets/images/headshot-{size}.jpg', format='JPEG', quality=86, optimize=True, progressive=True)
+print('done')
+PY
+```
 
 ### Deploy Online
 Push to GitHub Pages, Vercel, Netlify, or any static host.
@@ -45,7 +94,13 @@ git push origin main
 ## File Structure
 ```
 index.html          # Complete portfolio (self-contained)
+evidence.html       # Public sanitized artifact index
 README.md          # This file
+tests/smoke.spec.ts # Lightweight UI smoke tests
+assets/images/      # Optimized responsive headshot assets
+.github/workflows/  # CI automation for smoke tests
+analytics.config.js # Runtime analytics config (safe defaults)
+analytics.config.example.js # Analytics config template
 ```
 
 ## Deployment Options

@@ -532,9 +532,29 @@ li { margin-bottom: 0.25rem; }
       let searchTrackedForQuery = false;
       let lastFocused = null;
 
+      function validateAnalyticsConfig(cfg) {
+        if (!cfg || !cfg.provider) {
+          return { ok: false, reason: 'missing_provider' };
+        }
+        if (cfg.provider === 'plausible') {
+          return cfg.domain ? { ok: true } : { ok: false, reason: 'missing_domain' };
+        }
+        if (cfg.provider === 'ga4') {
+          return cfg.measurementId ? { ok: true } : { ok: false, reason: 'missing_measurement_id' };
+        }
+        return { ok: false, reason: 'unsupported_provider' };
+      }
+
       function initAnalytics() {
         const cfg = window.PORTFOLIO_ANALYTICS;
-        if (!cfg || !cfg.provider) return;
+        const check = validateAnalyticsConfig(cfg);
+        window.__portfolioAnalyticsStatus = check.ok ? 'configured' : ('unconfigured:' + check.reason);
+        if (!check.ok) {
+          if (window.console && typeof window.console.warn === 'function') {
+            window.console.warn('[analytics] configuration incomplete:', check.reason);
+          }
+          return;
+        }
 
         if (cfg.provider === 'plausible' && cfg.domain) {
           const p = document.createElement('script');
